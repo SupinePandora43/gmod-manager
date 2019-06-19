@@ -240,6 +240,16 @@ if args["install"]:
             installARGS(steam)
         else:
             pass
+for i in range(len(addons["addons"])):
+    for i1 in range(len(addons["addons"])):
+        if i != i1:
+            try:
+                addon = addons["addons"][i]
+                addon1 = addons["addons"][i1]
+                if (addon["title"] == addon1["title"]) and (addon["description"] == addon1["description"]) and (addon["preview"] == addon1["preview"]) and (addon["url"] == addon1["url"]) and (addon["time_updated"] == addon1["time_updated"]):
+                    del addons["addons"][i1]
+            except:
+                pass
 if not args["nocheck"]:
     for addon in addons["addons"]:
         addonURL = addon["url"]

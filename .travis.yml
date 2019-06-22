@@ -2,6 +2,7 @@ language: python
 python:
 - "3.6"
 
-install: skip
+install:
+- pip install requests
 script:
 - python main.py

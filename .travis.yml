@@ -1,19 +1,39 @@
-os: windows
-language: shell
 env:
   global:
-  - PATH=/c/Python37:/c/Python37/Scripts:$PATH
   - PYTHONIOENCODING=utf-8                     # fix for UnicodeEncodeError: 'charmap' codec can't encode character '\u251c' in position 1: character maps to <undefined>
-
-before_install:
-- choco install python
-- choco install wget
 
 install:
 - pip install requests
+- pip install pyinstaller
 - wget -P "./" "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe"
+
+jobs:
+  include:
+    - stage: test
+      os: windows
+      language: shell
+      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      before_install:
+      - choco install python
+      - choco install wget
+    - os: linux
+      language: python
+      python: "3.6"
+      before_script:
+      - echo \#!/usr/bin/env sh > gmad.exe
+      - cat gmad.exe
+      - chmod -x gmad.exe
 script:
 - python main.py                                                                            # nothing
 - python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
 - python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
 - python main.py                                                                            # nothing
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  name: $(date +'%Y.%m.%d') # $(date +'%Y.%m.%d.%H:%M.%S')
+  file_glob: true
+  file: ./builds/*
+  on:
+    branch: master

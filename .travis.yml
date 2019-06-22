@@ -19,15 +19,12 @@ jobs:
     - os: linux
       language: python
       python: "3.6"
-      before_script:
-      - echo \#!/usr/bin/env sh > gmad.exe
-      - cat gmad.exe
-      - chmod -x gmad.exe
+      env: ARGS=-nogmad
 script:
-- python main.py                                                                            # nothing
-- python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
-- python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
-- python main.py                                                                            # nothing
+- python main.py $ARGS                                                                            # nothing
+- python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
+- python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
+- python main.py $ARGS                                                                            # nothing
 
 deploy:
   provider: releases

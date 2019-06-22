@@ -135,6 +135,8 @@ with open("addons.json", "r") as addonsFile:
     addons = dict(json.loads(addonsFile.read()))
     addonsFile.close()
 
+nogmad = False
+
 
 def dedupe():
     for category in ["addons", "dupes", "saves", "collections"]:
@@ -210,8 +212,9 @@ def install_not_collection(steam_obj: steam_object, collection: str = None, late
                   valid_fileName_generator(steam_obj.title).fileName)
         if steam_obj.steam_type() == "addon":
             print(indent + "└ extracting via gmad")
-            subprocess.check_output([config.get("main", "gmad_path"), "extract", "-file", config.get("main", "temp_path")+"/" +
-                                     valid_fileName_generator(steam_obj.title).fileName + ".extracted", "-out", config.get("main", "gmod_path")+"/addons/"+valid_fileName_generator(steam_obj.title).fileName])
+            if not nogmad:
+                subprocess.check_output([config.get("main", "gmad_path"), "extract", "-file", config.get("main", "temp_path")+"/" +
+                                         valid_fileName_generator(steam_obj.title).fileName + ".extracted", "-out", config.get("main", "gmod_path")+"/addons/"+valid_fileName_generator(steam_obj.title).fileName])
         elif steam_obj.steam_type() == "dupe":
             shutil.copy(config.get("main", "temp_path")+"/"+valid_fileName_generator(steam_obj.title).fileName + ".extracted",
                         config.get("main", "gmod_path")+"/dupes/"+valid_fileName_generator(steam_obj.title).fileName+".dupe")
@@ -262,6 +265,7 @@ def install(steam_obj: steam_object, collection: str = None, latest=False):
 
 parser = argparse.ArgumentParser(
     description='Tool for managing Gmod Steam content')
+parser.add_argument("-nogmad", help="for travis", action="store_true")
 parser.add_argument("-nocheck",
                     help="Install/Check content only provided via 'install' arg", action="store_true")
 
@@ -285,6 +289,8 @@ def installARGS(url):
     category.insert(0, new_object)
     dedupe()
 
+
+nogmad = args["nogmad"]
 
 if args["install"]:
     for steam in args["install"]:

@@ -199,7 +199,7 @@ def install_not_collection(steam_obj: steam_object, collection: str = None, late
                     dl += len(data)
                     workshopFile.write(data)
                     done = int(50 * dl / total_length)
-                    sys.stdout.write("\r"+indent+u"├ downloading [%s%s]" %
+                    sys.stdout.write("\r"+indent+u"\u251c downloading [%s%s]" %
                                      ('=' * done, '┈' * (50-done)))
                     sys.stdout.flush()
                 print("")

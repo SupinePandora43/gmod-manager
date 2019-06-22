@@ -16,3 +16,4 @@ script:
 - python main.py                                                                            # nothing
 - python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
 - python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
+- python main.py                                                                            # nothing

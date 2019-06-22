@@ -6,3 +6,4 @@ install:
 - pip install requests
 script:
 - python main.py
+- python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119

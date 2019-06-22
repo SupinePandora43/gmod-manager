@@ -1,4 +1,5 @@
 # Gmod Manager
+[![Build Status](https://travis-ci.com/SupinePandora43/gmod-manager.svg?branch=master)](https://travis-ci.com/SupinePandora43/gmod-manager)
 ## Features
 * ### Supports
   * Addons

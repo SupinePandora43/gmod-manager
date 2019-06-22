@@ -252,9 +252,9 @@ def install_collection(steam_obj: steam_object):
 
 
 def install(steam_obj: steam_object, collection: str = None, latest=False):
-    if steam_obj.steam_type == "collection":
+    if steam_obj.steam_type() == "collection":
         return install_collection(steam_obj)
-    elif not steam_obj == None:
+    elif not steam_obj.steam_type() == None:
         install_not_collection(steam_obj, collection, latest)
     else:
         print("ERROR: " + steam_obj.url + ", isn't valid")
@@ -276,7 +276,7 @@ def installARGS(url):
     """
     new_steam_object = steam_object(url)
     category = addons[new_steam_object.steam_type() + "s"]
-    # install(new_steam_object)
+    install(new_steam_object)
     new_object = {"title": new_steam_object.title,
                   "description": new_steam_object.description,
                   "preview": new_steam_object.previewURL,

@@ -3,7 +3,7 @@ language: shell
 env:
   global:
   - PATH=/c/Python37:/c/Python37/Scripts:$PATH
-  - PYTHONIOENCODING=utf-8
+  - PYTHONIOENCODING=utf-8                     # fix for UnicodeEncodeError: 'charmap' codec can't encode character '\u251c' in position 1: character maps to <undefined>
 
 before_install:
 - choco install python
@@ -13,5 +13,6 @@ install:
 - pip install requests
 - wget -P "./" "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe"
 script:
-- python main.py
-- python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119
+- python main.py                                                                            # nothing
+- python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
+- python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection

@@ -132,8 +132,28 @@ if not os.path.exists("addons.json"):
         addonsFile.close()
 # read addons.json
 with open("addons.json", "r") as addonsFile:
-    addons = json.loads(addonsFile.read())
+    addons = dict(json.loads(addonsFile.read()))
     addonsFile.close()
+
+
+def dedupe():
+    for category in ["addons", "dupes", "saves", "collections"]:
+        for i in range(len(addons[category])):
+            for i1 in range(len(addons[category])):
+                if i != i1:
+                    try:
+                        addon = addons[category][i]
+                        addon1 = addons[category][i1]
+                        if (addon["title"] == addon1["title"]) and (addon["description"] == addon1["description"]) and (addon["preview"] == addon1["preview"]) and (addon["url"] == addon1["url"]) and (addon["time_updated"] == addon1["time_updated"]):
+                            if addon["childrens"] or addon1["childrens"]:
+                                if addon["childrens"] and not addon1["childrens"]:
+                                    del addons[category][i1]
+                                elif not addon["childrens"] and addon1["childrens"]:
+                                    del addons[category][i]
+                            else:
+                                del addons[category][i1]
+                    except:
+                        pass
 
 
 def extract(steam_obj: steam_object):
@@ -155,7 +175,7 @@ def installed(steam_obj: steam_object):
         return os.path.exists(config.get("main", "gmod_path")+"/saves/"+valid_fileName_generator(steam_obj.title).fileName+".gms")
 
 
-def install(steam_obj: steam_object, collection: str = None, latest=False):
+def install_not_collection(steam_obj: steam_object, collection: str = None, latest=False):
     prefix = ""
     indent = ""
     if collection:
@@ -163,6 +183,7 @@ def install(steam_obj: steam_object, collection: str = None, latest=False):
         indent = "│ "
         if latest:
             prefix = "└"
+            indent = " "
     print(prefix + steam_obj.title)
     if (not steam_obj.isLatest()) or (not installed(steam_obj)):
         # print(indent+"├ downloading")
@@ -185,7 +206,8 @@ def install(steam_obj: steam_object, collection: str = None, latest=False):
             workshopFile.close()
         print(indent + "├ extracting")
         extract(steam_obj)
-        os.remove(config.get("main", "temp_path")+"/" +valid_fileName_generator(steam_obj.title).fileName)
+        os.remove(config.get("main", "temp_path")+"/" +
+                  valid_fileName_generator(steam_obj.title).fileName)
         if steam_obj.steam_type() == "addon":
             print(indent + "└ extracting via gmad")
             subprocess.check_output([config.get("main", "gmad_path"), "extract", "-file", config.get("main", "temp_path")+"/" +
@@ -204,9 +226,38 @@ def install(steam_obj: steam_object, collection: str = None, latest=False):
             with open(config.get("main", "gmod_path")+"/saves/"+valid_fileName_generator(steam_obj.title).fileName + ".jpg", "wb") as previewFile:
                 previewFile.write(preview.content)
                 previewFile.close()
-        os.remove(config.get("main", "temp_path")+"/" +valid_fileName_generator(steam_obj.title).fileName + ".extracted")
+        os.remove(config.get("main", "temp_path")+"/" +
+                  valid_fileName_generator(steam_obj.title).fileName + ".extracted")
     else:
         print(indent + "└ latest")
+
+
+def install_collection(steam_obj: steam_object):
+    print(steam_obj.title)
+    newTimes = {}
+    for iID in range(len(steam_obj.collectionJSON['response']['collectiondetails'][0]['children'])):
+        addon = steam_obj.collectionJSON["response"]['collectiondetails'][0]["children"][iID]
+        try:
+            newTimes[addon["publishedfileid"]
+                     ] = collection["childrens"][addon["publishedfileid"]]
+        except:
+            newTimes[addon["publishedfileid"]] = 0
+        addonSTEAM = steam_object(
+            "https://steamcommunity.com/sharedfiles/filedetails/?id="+addon["publishedfileid"], newTimes[addon["publishedfileid"]])
+        install(addonSTEAM, collection=steam_obj.title, latest=(iID == len(
+            steam_obj.collectionJSON['response']['collectiondetails'][0]['children'])-1))
+        newTimes[addon["publishedfileid"]] = addonSTEAM.latestUpdate_time
+
+    return {"childrens": newTimes}
+
+
+def install(steam_obj: steam_object, collection: str = None, latest=False):
+    if steam_obj.steam_type == "collection":
+        return install_collection(steam_obj)
+    elif not steam_obj == None:
+        install_not_collection(steam_obj, collection, latest)
+    else:
+        print("ERROR: " + steam_obj.url + ", isn't valid")
 
 
 parser = argparse.ArgumentParser(
@@ -220,15 +271,19 @@ args = vars(parser.parse_args())
 
 
 def installARGS(url):
+    """
+    thanks https://stackoverflow.com/a/43424173/9765252
+    """
     new_steam_object = steam_object(url)
     category = addons[new_steam_object.steam_type() + "s"]
-    install(new_steam_object)
+    # install(new_steam_object)
     new_object = {"title": new_steam_object.title,
                   "description": new_steam_object.description,
                   "preview": new_steam_object.previewURL,
                   "url": new_steam_object.url,
                   "time_updated": new_steam_object.latestUpdate_time}
-    category.append(new_object)
+    category.insert(0, new_object)
+    dedupe()
 
 
 if args["install"]:
@@ -240,16 +295,7 @@ if args["install"]:
             installARGS(steam)
         else:
             pass
-for i in range(len(addons["addons"])):
-    for i1 in range(len(addons["addons"])):
-        if i != i1:
-            try:
-                addon = addons["addons"][i]
-                addon1 = addons["addons"][i1]
-                if (addon["title"] == addon1["title"]) and (addon["description"] == addon1["description"]) and (addon["preview"] == addon1["preview"]) and (addon["url"] == addon1["url"]) and (addon["time_updated"] == addon1["time_updated"]):
-                    del addons["addons"][i1]
-            except:
-                pass
+
 if not args["nocheck"]:
     for addon in addons["addons"]:
         addonURL = addon["url"]
@@ -283,31 +329,17 @@ if not args["nocheck"]:
         save["url"] = saveSTEAM.url
         install(saveSTEAM)
         save["time_updated"] = saveSTEAM.latestUpdate_time
-
-    for i in range(len(addons["collections"])):
-        collection = addons["collections"][i]
-        collectionSTEAM = steam_object(collection["url"])
-        print(collectionSTEAM.title)
-        addons["collections"][i]["url"] = collectionSTEAM.url
-        addons["collections"][i]["title"] = collectionSTEAM.title
-        addons["collections"][i]["description"] = collectionSTEAM.description
-        addons["collections"][i]["preview"] = collectionSTEAM.previewURL
-        newTimes = {}
-        for iID in range(len(collectionSTEAM.collectionJSON['response']['collectiondetails'][0]['children'])):
-            addon = collectionSTEAM.collectionJSON["response"]['collectiondetails'][0]["children"][iID]
-            try:
-                newTimes[addon["publishedfileid"]
-                         ] = collection["childrens"][addon["publishedfileid"]]
-            except:
-                newTimes[addon["publishedfileid"]] = 0
-
-            addonSTEAM = steam_object(
-                "https://steamcommunity.com/sharedfiles/filedetails/?id="+addon["publishedfileid"], newTimes[addon["publishedfileid"]])
-            install(addonSTEAM, collection=collectionSTEAM.title, latest=(iID == len(
-                collectionSTEAM.collectionJSON['response']['collectiondetails'][0]['children'])))
-            newTimes[addon["publishedfileid"]] = addonSTEAM.latestUpdate_time
-        addons["collections"][i]["time_updated"] = collectionSTEAM.latestUpdate_time
-        addons["collections"][i]["childrens"] = newTimes
+    dedupe()
+    for collection in addons["collections"]:
+        steam_obj = steam_object(
+            collection["url"], collection["time_updated"])
+        collection["url"] = steam_obj.url
+        collection["title"] = steam_obj.title
+        collection["description"] = steam_obj.description
+        collection["preview"] = steam_obj.previewURL
+        result = install_collection(steam_obj)
+        collection["time_updated"] = steam_obj.latestUpdate_time
+        collection["childrens"] = result["childrens"]
 
 # for i in range(len(addons["collections"])):
 #     collection = addons["collections"][i]
@@ -317,6 +349,8 @@ if not args["nocheck"]:
 #             "https://steamcommunity.com/sharedfiles/filedetails/?id="+addon["publishedfileid"])
 #         print(addonSTEAM.title)
 #         addons['collections'][i]['children'][addonSTEAM.steamID] = addonSTEAM.latestUpdate_time
+
+dedupe()
 
 with open("addons.json", "w") as addonsFile:
     addonsFile.write(json.dumps(addons, indent=4))

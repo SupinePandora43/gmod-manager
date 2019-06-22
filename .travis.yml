@@ -1,9 +1,14 @@
-language: python
-python:
-- "3.6"
+os: windows
+language: shell
+env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+
+before_install:
+- choco install python
+- choco install wget
 
 install:
 - pip install requests
+- wget -P "./" "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe"
 script:
 - python main.py
 - python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119

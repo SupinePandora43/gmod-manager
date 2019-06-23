@@ -28,12 +28,15 @@ script:
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
 - python main.py $ARGS                                                                            # nothing
 # before_deploy: export TRAVIS_TAG=latest
+after_script:
+- pyinstaller --onefile main.py -n gmod-manager
+- ls ./dist
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   name: $(date +'%Y.%m.%d') # $(date +'%Y.%m.%d.%H:%M.%S')
   file_glob: true
-  file: ./builds/*
+  file: .\/dist\/gmod-manager(\.[a-z]*)?
   skip_cleanup: true
   on:
     tags: true

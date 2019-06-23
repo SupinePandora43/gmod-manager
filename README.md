@@ -1,5 +1,6 @@
 # Gmod Manager
 [![Build Status](https://travis-ci.com/SupinePandora43/gmod-manager.svg?branch=master)](https://travis-ci.com/SupinePandora43/gmod-manager)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSupinePandora43%2Fgmod-manager.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSupinePandora43%2Fgmod-manager?ref=badge_shield)
 ## Features
 * ### Supports
   * Addons
@@ -22,3 +23,7 @@
 * can't download collections through `-install` argument
 
 inspired by https://github.com/magnusjjj/gmadget
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSupinePandora43%2Fgmod-manager.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FSupinePandora43%2Fgmod-manager?ref=badge_large)

@@ -25,13 +25,14 @@ script:
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
 - python main.py $ARGS                                                                            # nothing
-before_deploy: export TRAVIS_TAG=latest
+# before_deploy: export TRAVIS_TAG=latest
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  name: $(date +'%Y.%m.%d') # $(date +'%Y.%m.%d.%H:%M.%S')
+  # name: $(date +'%Y.%m.%d') # $(date +'%Y.%m.%d.%H:%M.%S')
   file_glob: true
   skip_cleanup: true
   file: ./builds/*
   on:
+    tags: true
     branch: master

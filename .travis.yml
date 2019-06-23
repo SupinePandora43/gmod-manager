@@ -27,8 +27,7 @@ script:
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
 - python main.py $ARGS                                                                            # nothing
-after_script:
-- pyinstaller --onefile main.py -n gmod-manager
+- pyinstaller --onefile main.py -n gmod-manager                                                   #build
 - ls ./dist
 before_deploy:
 - export TRAVIS_TAG=latest

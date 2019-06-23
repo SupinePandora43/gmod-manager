@@ -1,9 +1,6 @@
 env:
   global:
   - PYTHONIOENCODING=utf-8                     # fix for UnicodeEncodeError: 'charmap' codec can't encode character '\u251c' in position 1: character maps to <undefined>
-cache:
-  directories:
-  - C:\Python37
 install:
 - pip install requests
 - pip install pyinstaller
@@ -14,6 +11,9 @@ jobs:
     - stage: test
       os: windows
       language: shell
+      cache:
+        directories:
+        - C:\Python37
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install python
@@ -30,10 +30,10 @@ script:
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  # name: $(date +'%Y.%m.%d') # $(date +'%Y.%m.%d.%H:%M.%S')
+  name: $(date +'%Y.%m.%d') # $(date +'%Y.%m.%d.%H:%M.%S')
   file_glob: true
-  skip_cleanup: true
   file: ./builds/*
+  skip_cleanup: true
   on:
     tags: true
     branch: master

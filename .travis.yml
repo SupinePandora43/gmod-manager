@@ -1,7 +1,9 @@
 env:
   global:
   - PYTHONIOENCODING=utf-8                     # fix for UnicodeEncodeError: 'charmap' codec can't encode character '\u251c' in position 1: character maps to <undefined>
-
+cache:
+  directories:
+  - C:\Python37
 install:
 - pip install requests
 - pip install pyinstaller
@@ -15,7 +17,6 @@ jobs:
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install python
-      - choco install wget
     - os: linux
       language: python
       python: "3.6"

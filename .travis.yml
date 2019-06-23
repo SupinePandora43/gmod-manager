@@ -16,7 +16,7 @@ jobs:
         - /c/Python37
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
-      - choco install python
+      - choco install --x86 python
     # - os: linux
     #   language: python
     #   python: "3.6"
@@ -30,12 +30,12 @@ script:
 - pyinstaller --onefile main.py -n gmod-manager                                                   #build
 - ls ./dist
 before_deploy:
-- export TRAVIS_TAG=latest
+- export TRAVIS_TAG=$(date +'%Y.%m.%d.%H:%M.%S')
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file: ./dist/gmod-manager.exe
   skip_cleanup: true
-  name: $(date +'%Y.%m.%d.%H:%M.%S')
+  name: $TRAVIS_COMMIT_MESSAGE
   on:
     branch: master

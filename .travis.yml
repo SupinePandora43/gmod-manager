@@ -11,9 +11,9 @@ jobs:
     - stage: test
       os: windows
       language: shell
-      cache:
-        directories:
-        - /c/Python37
+      # cache:
+      #   directories:
+      #   - /c/Python37
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
@@ -29,8 +29,8 @@ script:
 - python main.py $ARGS                                                                            # nothing
 - pyinstaller --onefile main.py -n gmod-manager                                                   #build
 - ls ./dist
-before_deploy:
-- export TRAVIS_TAG=$(date +'%Y.%m.%d.%H:%M.%S')
+# before_deploy:
+# - export TRAVIS_TAG=$(date +'%Y.%m.%d.%H:%M.%S')
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN

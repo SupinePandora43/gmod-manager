@@ -13,7 +13,7 @@ jobs:
       language: shell
       cache:
         directories:
-        - C:\Python37
+        - /c/Python37
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install python
@@ -35,8 +35,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file_glob: true
-  file: "./dist/gmod-manager(.[a-z]*)?"
+  file: ./dist/gmod-manager.exe
   skip_cleanup: true
   name: $(date +'%Y.%m.%d.%H:%M.%S')
   on:

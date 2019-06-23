@@ -39,4 +39,4 @@ deploy:
   file: .\/dist\/gmod-manager(\.[a-z]*)?
   skip_cleanup: true
   on:
-    branch: master
+    tags: true

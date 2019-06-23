@@ -31,6 +31,8 @@ script:
 after_script:
 - pyinstaller --onefile main.py -n gmod-manager
 - ls ./dist
+before_deploy:
+- export TRAVIS_TAG=latest
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN

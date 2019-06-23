@@ -21,6 +21,7 @@ jobs:
       language: python
       python: "3.6"
       env: ARGS=-nogmad
+
 script:
 - python main.py $ARGS                                                                            # nothing
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon

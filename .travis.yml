@@ -11,16 +11,12 @@ jobs:
     - stage: test
       os: windows
       language: shell
-      # cache:
-      #   directories:
-      #   - /c/Python37
+      cache:
+        directories:
+        - /c/Python37
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
-    # - os: linux
-    #   language: python
-    #   python: "3.6"
-    #   env: ARGS=-nogmad
 
 script:
 - python main.py $ARGS                                                                            # nothing
@@ -29,13 +25,12 @@ script:
 - python main.py $ARGS                                                                            # nothing
 - pyinstaller --onefile main.py -n gmod-manager                                                   #build
 - ls ./dist
-# before_deploy:
-# - export TRAVIS_TAG=$(date +'%Y.%m.%d.%H:%M.%S')
+
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file: ./dist/gmod-manager.exe
   skip_cleanup: true
-  name: $TRAVIS_COMMIT_MESSAGE
+  name: $(date +'%Y.%m.%d.%H:%M.%S')
   on:
     branch: master

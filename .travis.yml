@@ -18,6 +18,10 @@ jobs:
       before_install:
       - choco install --x86 python
 
+branches:
+  only:
+    - master
+
 script:
 - python main.py $ARGS                                                                            # nothing
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon

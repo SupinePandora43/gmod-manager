@@ -10,16 +10,25 @@
 * Download only if update available
 * Download progress
 * Custom configuration (main.cfg)
-## How-To-Use
-1. change paths in main.cfg (`gmad_path`, `gmod_path`, `temp_path`)
-2. enter in command line/prompt `python main.py -install` (steam workshop link)
+## How To Install
+1. download exe from [releases](https://github.com/SupinePandora43/gmod-manager/releases)
+2. move `gmod-manager.exe` to `Garry's Mod/garrysmod` folder, run it!
+3. change [paths](#Paths) in `main.cfg`
+4. enter in command line/prompt `gmod-manager.py -install` (steam workshop link)
 ## Arguments
-* `-install` - argumant for providing workshop urls/id's. `python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119`
+* `-install` - argument for providing workshop urls/id's. `python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119`
 * `-nocheck` - argument for disabling checking for updates, addons in addons.json. `python main.py -nocheck -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119`
-## Requirements
+## Paths
+Path | Optional | Description | Default value
+--|--|--|--
+| `gmad_path` | :heavy_multiplication_x: | path to `gmad.exe`  | `gmad.exe` ( if in gmod folder: `../bin/gmad.exe`)
+| `temp_path` | :heavy_check_mark:       | temp folder         | `temp`
+| `gmod_path` | :heavy_check_mark:       | path to `garrysmod` | `.`
+
+## Build Requirements
 * Python 3
 ## Limitations
-* finds addons.json only in script folder
+* uses addons.json only in self folder
 * can't dedupe collections
 
 inspired by https://github.com/magnusjjj/gmadget

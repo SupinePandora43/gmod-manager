@@ -11,7 +11,7 @@ from configparser import ConfigParser
 config = ConfigParser()
 if not os.path.exists("main.cfg"):
     config.add_section("main")
-    config.set("main", "gmad_path", "gmad.exe")
+    config.set("main", "gmad_path", os.path.exists("../bin/gmad.exe") and "../bin/gmad.exe" or "gmad.exe" )
     config.set("main", "temp_path", "temp")
     config.set("main", "gmod_path", ".")
     with open("main.cfg", "w") as configFile:

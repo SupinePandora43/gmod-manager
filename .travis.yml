@@ -1,6 +1,6 @@
 env:
   global:
-  - PYTHONIOENCODING=utf-8                     # fix for UnicodeEncodeError: 'charmap' codec can't encode character '\u251c' in position 1: character maps to <undefined>
+  - PYTHONIOENCODING=utf-8 # fix for UnicodeEncodeError: 'charmap' codec can't encode character '\u251c' in position 1: character maps to <undefined>
 
 install:
 - pip install requests
@@ -26,8 +26,9 @@ script:
 - python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
 - python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
 - python main.py                                                                            # nothing
+
+before_deploy:
 - pyinstaller --onefile main.py -n gmod-manager                                             # build
-- echo $TRAVIS_TAG
 
 deploy:
   provider: releases

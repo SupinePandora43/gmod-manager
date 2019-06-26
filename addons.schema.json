@@ -1,6 +1,5 @@
 {
-	"$schema": "http://json-schema.org/draft-06/schema#",
-	"$id": "https://github.com/SupinePandora43/gmod-manager/raw/master/addons.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
 	"$ref": "#/definitions/Addons",
 	"definitions": {
 		"Addons": {
@@ -9,24 +8,28 @@
 			"properties": {
 				"addons": {
 					"type": "array",
+					"description": "Addons array",
 					"items": {
 						"$ref": "#/definitions/Addon"
 					}
 				},
 				"dupes": {
 					"type": "array",
+					"description": "Dupes array",
 					"items": {
 						"$ref": "#/definitions/Addon"
 					}
 				},
 				"saves": {
 					"type": "array",
+					"description": "Saves array",
 					"items": {
 						"$ref": "#/definitions/Addon"
 					}
 				},
 				"collections": {
 					"type": "array",
+					"description": "Collections array",
 					"items": {
 						"$ref": "#/definitions/Collections"
 					}
@@ -45,12 +48,15 @@
 			"additionalProperties": false,
 			"properties": {
 				"title": {
+					"description": "Title",
 					"type": "string"
 				},
 				"description": {
+					"description": "Description",
 					"type": "string"
 				},
 				"preview": {
+					"description": "Preview URL",
 					"type": "string",
 					"format": "uri",
 					"qt-uri-protocols": [
@@ -58,6 +64,7 @@
 					]
 				},
 				"url": {
+					"description": "Steam URL",
 					"type": "string",
 					"format": "uri",
 					"qt-uri-protocols": [
@@ -65,7 +72,9 @@
 					]
 				},
 				"time_updated": {
-					"type": "integer"
+					"description": "Last updated time",
+					"type": "integer",
+					"exclusiveMinimum": 0
 				}
 			},
 			"required": [
@@ -82,12 +91,15 @@
 			"additionalProperties": false,
 			"properties": {
 				"title": {
+					"description": "Title",
 					"type": "string"
 				},
 				"description": {
+					"description": "Description",
 					"type": "string"
 				},
 				"preview": {
+					"description": "Preview URL",
 					"type": "string",
 					"format": "uri",
 					"qt-uri-protocols": [
@@ -95,6 +107,7 @@
 					]
 				},
 				"url": {
+					"description": "Steam URL",
 					"type": "string",
 					"format": "uri",
 					"qt-uri-protocols": [
@@ -102,12 +115,16 @@
 					]
 				},
 				"time_updated": {
+					"description": "Last updated time",
 					"type": "integer"
 				},
 				"childrens": {
+					"description": "Included addons ids",
 					"type": "object",
 					"additionalProperties": {
-						"type": "integer"
+						"description": "Last updated time",
+						"type": "integer",
+						"exclusiveMinimum": 0
 					}
 				}
 			},

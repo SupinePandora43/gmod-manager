@@ -1,3 +1,11 @@
 {
-	"python.jediEnabled": false
+	"python.jediEnabled": false,
+	"json.schemas": [
+		{
+			"fileMatch": [
+				"addons.json"
+			],
+			"url": "/addons.schema.json"
+		}
+	]
 }

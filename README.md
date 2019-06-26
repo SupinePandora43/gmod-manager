@@ -20,7 +20,7 @@
 * Python 3
 ## Limitations
 * finds addons.json only in script folder
-* can't download collections through `-install` argument
+* can't dedupe collections
 
 inspired by https://github.com/magnusjjj/gmadget
 

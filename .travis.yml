@@ -11,9 +11,6 @@ jobs:
     - stage: test
       os: windows
       language: shell
-      cache:
-        directories:
-        - /c/Python37
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
@@ -27,15 +24,14 @@ script:
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119 # addon
 - python main.py $ARGS -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
 - python main.py $ARGS                                                                            # nothing
-- pyinstaller --onefile main.py -n gmod-manager                                                   #build
-- ls ./dist
-before_deploy:
-- export TRAVIS_TAG=$(date +'%Y.%m.%d-%H_%M_%S')
+- pyinstaller --onefile main.py -n gmod-manager                                                   # build
+
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file: ./dist/gmod-manager.exe
   skip_cleanup: true
-  name: $(date +'%Y.%m.%d.%H:%M.%S')
+  name: $TRAVIS_TAG
   on:
+    tags: true
     branch: master

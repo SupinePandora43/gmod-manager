@@ -1,6 +1,7 @@
 env:
   global:
   - PYTHONIOENCODING=utf-8                     # fix for UnicodeEncodeError: 'charmap' codec can't encode character '\u251c' in position 1: character maps to <undefined>
+
 install:
 - pip install requests
 - pip install pyinstaller

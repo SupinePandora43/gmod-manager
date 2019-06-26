@@ -1,0 +1,124 @@
+{
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"$id": "https://github.com/SupinePandora43/gmod-manager/raw/master/addons.schema.json",
+	"$ref": "#/definitions/Addons",
+	"definitions": {
+		"Addons": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"addons": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Addon"
+					}
+				},
+				"dupes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Addon"
+					}
+				},
+				"saves": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Addon"
+					}
+				},
+				"collections": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Collections"
+					}
+				}
+			},
+			"required": [
+				"addons",
+				"collections",
+				"dupes",
+				"saves"
+			],
+			"title": "Addons"
+		},
+		"Addon": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"preview": {
+					"type": "string",
+					"format": "uri",
+					"qt-uri-protocols": [
+						"https"
+					]
+				},
+				"url": {
+					"type": "string",
+					"format": "uri",
+					"qt-uri-protocols": [
+						"https"
+					]
+				},
+				"time_updated": {
+					"type": "integer"
+				}
+			},
+			"required": [
+				"description",
+				"preview",
+				"time_updated",
+				"title",
+				"url"
+			],
+			"title": "Addon"
+		},
+		"Collections": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"preview": {
+					"type": "string",
+					"format": "uri",
+					"qt-uri-protocols": [
+						"https"
+					]
+				},
+				"url": {
+					"type": "string",
+					"format": "uri",
+					"qt-uri-protocols": [
+						"https"
+					]
+				},
+				"time_updated": {
+					"type": "integer"
+				},
+				"childrens": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "integer"
+					}
+				}
+			},
+			"required": [
+				"description",
+				"preview",
+				"time_updated",
+				"title",
+				"url"
+			],
+			"title": "Collections"
+		}
+	}
+}

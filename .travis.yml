@@ -25,6 +25,7 @@ script:
 - python main.py -install https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899 # collection
 - python main.py                                                                            # nothing
 - pyinstaller --onefile main.py -n gmod-manager                                             # build
+- echo $TRAVIS_TAG
 
 deploy:
   provider: releases
@@ -33,6 +34,5 @@ deploy:
   skip_cleanup: true
   name: $TRAVIS_TAG
   on:
-    tags: true
     branch: master
-    # condition: "$TRAVIS_TAG =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$"
+    condition: "$TRAVIS_TAG =~ ^v?[0-9]+.[0-9]+.[0-9]+$"

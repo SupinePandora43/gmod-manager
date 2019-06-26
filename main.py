@@ -7,7 +7,7 @@ import subprocess
 import shutil
 import sys
 from configparser import ConfigParser
-print(1)
+
 config = ConfigParser()
 if not os.path.exists("main.cfg"):
     config.add_section("main")

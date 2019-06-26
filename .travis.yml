@@ -29,7 +29,8 @@ script:
 - python main.py $ARGS                                                                            # nothing
 - pyinstaller --onefile main.py -n gmod-manager                                                   #build
 - ls ./dist
-
+before_deploy:
+- export TRAVIS_TAG=$(date +'%Y.%m.%d.%H:%M.%S')
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN

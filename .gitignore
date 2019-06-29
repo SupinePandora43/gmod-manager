@@ -4,6 +4,7 @@ dupes
 saves
 temp
 addons.json
+main.cfg
 build
 dist
 *.spec

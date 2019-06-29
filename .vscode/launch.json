@@ -8,10 +8,11 @@
 			"program": "${workspaceFolder}/main.py",
 			"args": [
 				"-install",
-				"https://steamcommunity.com/sharedfiles/filedetails/?id=470366741"
+				"https://steamcommunity.com/sharedfiles/filedetails/?id=1782190410"
+				// "https://steamcommunity.com/sharedfiles/filedetails/?id=470366741"
 			],
 			"console": "integratedTerminal",
-			"timeout": 20000
+			"timeout": 200000
 		}
 	]
 }

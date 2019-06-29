@@ -113,7 +113,7 @@ class steam_object():
 
         if len(self.fileJSON['response']['publishedfiledetails'][0]) <= 2:
             return None
-        elif "addon" in str(self.fileJSON['response']['publishedfiledetails'][0]['filename']):
+        elif "addon" in str(self.fileJSON['response']['publishedfiledetails'][0]['filename']) or "gm" in str(self.fileJSON['response']['publishedfiledetails'][0]['filename']):
             return "addon"
         elif str(self.fileJSON["response"]["publishedfiledetails"][0]["filename"]).startswith("creation/"):
             if str(self.fileJSON['response']['publishedfiledetails'][0]['tags'][0]['tag']) == "Dupe":

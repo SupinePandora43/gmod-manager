@@ -5,7 +5,6 @@ env:
 install:
 - pip install requests
 - pip install pyinstaller
-- wget -P "./" "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe"
 
 jobs:
   include:
@@ -15,6 +14,11 @@ jobs:
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
+    - stage: test
+      os: linux
+      language: python
+      python: 3.6
+
 
 branches:
   only:
@@ -33,7 +37,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: ./dist/gmod-manager.exe
+  file: ./dist/gmod-manager*
   skip_cleanup: true
   name: $TRAVIS_TAG
   on:

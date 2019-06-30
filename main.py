@@ -13,8 +13,14 @@ if not os.path.exists("main.cfg"):
     config.add_section("main")
     gmad_path = "gmad.exe"
     import platform
-    if platform.system() == "Windows" and os.path.exists("../bin/gmad.exe"):
-        gmad_path = "../bin/gmad.exe"
+    if platform.system() == "Windows":
+        if os.path.exists("../bin/gmad.exe"):
+            gmad_path = "../bin/gmad.exe"
+        elif not "Garry's Mod Addon Creator" in str(subprocess.check_output("gmad.exe")):
+            with open("./gmad.exe", "wb") as gmad_windows_file:
+                gmad_windows_file.write(requests.get(
+                    "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe").content)
+                gmad_windows_file.close()
     elif platform.system() == "Linux":
         passed = False
         for gmad_probably_path in ["./gmad_linux", "./gmad", "../bin/gmad", "../bin/gmad_linux"]:

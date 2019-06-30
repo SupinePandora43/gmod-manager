@@ -39,6 +39,7 @@ if not os.path.exists("main.cfg"):
     elif platform.system() == "Darwin":
         pass
     else:
+        print(platform.system())
         print("Platform can't be identified")
     config.set("main", "gmad_path", gmad_path)
     config.set("main", "temp_path", "temp")

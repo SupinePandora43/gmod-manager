@@ -35,6 +35,7 @@ if not os.path.exists("main.cfg"):
                 gmad_linux_file.close()
             gmad_linux = None
             gmad_path = "./gmad_linux"
+            subprocess.check_output(["chmod", "-x", gmad_path])
     elif platform.system() == "Darwin":
         pass
     else:
@@ -230,7 +231,7 @@ def install_not_collection(steam_obj: steam_object, collection: str = None, late
                     workshopFile.write(data)
                     done = int(50 * dl / total_length)
                     sys.stdout.write("\r"+indent+"├ downloading [%s%s]" %
-                                     ('=' * done, '┈' * (50-done)))
+                                     ('=' * done, '─' * (50-done)))
                     sys.stdout.flush()
                 print("")
             workshopFile.close()

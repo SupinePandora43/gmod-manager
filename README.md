@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/SupinePandora43/gmod-manager.svg?branch=master)](https://travis-ci.com/SupinePandora43/gmod-manager)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSupinePandora43%2Fgmod-manager.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSupinePandora43%2Fgmod-manager?ref=badge_shield)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2941/badge)](https://bestpractices.coreinfrastructure.org/projects/2941)
 
 - [Gmod Manager](#Gmod-Manager)
   - [Features](#Features)
@@ -38,11 +39,11 @@
 
 ## Paths
 
-| Path        | Optional                 | Description         | Default value                                      |
-| ----------- | ------------------------ | ------------------- | -------------------------------------------------- |
-| `gmad_path` | :heavy_multiplication_x: | path to `gmad.exe`  | `gmad.exe` ( if in gmod folder: `../bin/gmad.exe`) |
-| `temp_path` | :heavy_check_mark:       | temp folder         | `temp`                                             |
-| `gmod_path` | :heavy_check_mark:       | path to `garrysmod` | `.`                                                |
+| Path        | Optional                 | Description         | Default value                   |
+| ----------- | ------------------------ | ------------------- | ------------------------------- |
+| `gmad_path` | :heavy_multiplication_x: | path to `gmad.exe`  | different on different systems! |
+| `temp_path` | :heavy_check_mark:       | temp folder         | `temp`                          |
+| `gmod_path` | :heavy_check_mark:       | path to `garrysmod` | `.`                             |
 
 ## Build Requirements
 

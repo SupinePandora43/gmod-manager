@@ -39,7 +39,7 @@ if not os.path.exists("main.cfg"):
                 gmad_linux_file.close()
             gmad_linux = None
             gmad_path = "./gmad_linux"
-            subprocess.check_output(["chmod", "-x", gmad_path])
+            subprocess.check_output(["chmod", "+x", gmad_path])
     elif platform.system() == "Darwin":
         pass
     else:

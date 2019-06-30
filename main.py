@@ -11,7 +11,29 @@ from configparser import ConfigParser
 config = ConfigParser()
 if not os.path.exists("main.cfg"):
     config.add_section("main")
-    config.set("main", "gmad_path", os.path.exists("../bin/gmad.exe") and "../bin/gmad.exe" or "gmad.exe" )
+    gmad_path = "gmad.exe"
+    import platform
+    if platform.system() == "Windows" and os.path.exists("../bin/gmad.exe"):
+        gmad_path = "../bin/gmad.exe"
+    elif platform.system() == "Linux":
+        passed = False
+        for gmad_probably_path in ["./gmad_linux", "./gmad", "../bin/gmad", "../bin/gmad_linux"]:
+            if os.path.exists(gmad_probably_path):
+                gmad_path = gmad_probably_path
+                passed = True
+        if not passed:
+            gmad_linux = requests.get(
+                "https://github.com/AbigailBuccaneer/gmad-build/releases/download/v20180201/gmad_linux").content
+            with open("./gmad_linux", "wb") as gmad_linux_file:
+                gmad_linux_file.write(gmad_linux)
+                gmad_linux_file.close()
+            gmad_linux = None
+            gmad_path = "./gmad_linux"
+    elif platform.system() == "Darwin":
+        pass
+    else:
+        print("Platform can't be identified")
+    config.set("main", "gmad_path", gmad_path)
     config.set("main", "temp_path", "temp")
     config.set("main", "gmod_path", ".")
     with open("main.cfg", "w") as configFile:

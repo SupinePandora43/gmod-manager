@@ -14,6 +14,9 @@ jobs:
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
+      branches:
+        only:
+        - /v?[0-9]+\.[0-9]+\.[0-9]+(.*)?/
     - stage: test
       sudo: required
       os: linux

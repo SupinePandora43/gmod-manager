@@ -8,45 +8,46 @@ import shutil
 import sys
 from configparser import ConfigParser
 
+parser = argparse.ArgumentParser(
+    description='Tool for managing Gmod Steam content')
+parser.add_argument("-nogmad", help="for travis", action="store_true")
+parser.add_argument("-download", help="Download gmad", action="store_true")
+parser.add_argument("-nocheck",
+                    help="Install/Check content only provided via 'install' arg", action="store_true")
+
+parser.add_argument("-install",
+                    help="Install new content", type=str, nargs='+', metavar='ID')
+args = vars(parser.parse_args())
+
 config = ConfigParser()
 if not os.path.exists("main.cfg"):
     config.add_section("main")
-    gmad_path = "gmad.exe"
-    import platform
-    if platform.system() == "Windows":
-        if os.path.exists("../bin/gmad.exe"):
-            gmad_path = "../bin/gmad.exe"
-        else:
-            try:
-                print("try")
-                if not "Garry's Mod Addon Creator" in str(subprocess.check_output("gmad.exe")):
-                    print("if not")
-                    with open("./gmad.exe", "wb") as gmad_windows_file:
-                        print("write")
-                        gmad_windows_file.write(requests.get(
-                            "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe").content)
-                        gmad_windows_file.close()
-            except Exception as err:
-                print("except")
-    elif platform.system() == "Linux":
-        passed = False
-        for gmad_probably_path in ["./gmad_linux", "./gmad", "../bin/gmad", "../bin/gmad_linux"]:
-            if os.path.exists(gmad_probably_path):
-                gmad_path = gmad_probably_path
-                passed = True
-        if not passed:
-            gmad_linux = requests.get(
-                "https://github.com/AbigailBuccaneer/gmad-build/releases/download/v20180201/gmad_linux").content
-            with open("./gmad_linux", "wb") as gmad_linux_file:
-                gmad_linux_file.write(gmad_linux)
-                gmad_linux_file.close()
-            gmad_linux = None
-            gmad_path = "./gmad_linux"
-            subprocess.check_output(["chmod", "+x", gmad_path])
-    elif platform.system() == "Darwin":
-        pass
-    else:
-        print(platform.system() + " - Platform can't be identified")
+    for gmad_probably_path in ["./gmad.exe", "../bin/gmad.exe", "./gmad_linux", "./gmad", "../bin/gmad", "../bin/gmad_linux"]:
+        if os.path.exists(gmad_probably_path):
+            gmad_path = gmad_probably_path
+            passed = True
+    if gmad_path == None:
+        if args["download"]:
+            import platform
+            if platform.system() == "Windows":
+                with open("./gmad.exe", "wb") as gmad_windows_file:
+                    gmad_windows_file.write(requests.get(
+                        "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe").content)
+                    gmad_windows_file.close()
+            elif platform.system() == "Linux":
+                gmad_linux = requests.get(
+                    "https://github.com/AbigailBuccaneer/gmad-build/releases/download/v20180201/gmad_linux").content
+                with open("./gmad_linux", "wb") as gmad_linux_file:
+                    gmad_linux_file.write(gmad_linux)
+                    gmad_linux_file.close()
+                gmad_linux = None
+                gmad_path = "./gmad_linux"
+                subprocess.check_output(["chmod", "+x", gmad_path])
+            elif platform.system() == "Darwin":
+                pass
+            else:
+                print(platform.system() + " - Platform can't be identified")
+            platform = None
     config.set("main", "gmad_path", gmad_path)
     config.set("main", "temp_path", "temp")
     config.set("main", "gmod_path", ".")
@@ -297,17 +298,6 @@ def install(steam_obj: steam_object, collection: str = None, latest=False):
         install_not_collection(steam_obj, collection, latest)
     else:
         print("ERROR: " + steam_obj.url + ", isn't valid")
-
-
-parser = argparse.ArgumentParser(
-    description='Tool for managing Gmod Steam content')
-parser.add_argument("-nogmad", help="for travis", action="store_true")
-parser.add_argument("-nocheck",
-                    help="Install/Check content only provided via 'install' arg", action="store_true")
-
-parser.add_argument("-install",
-                    help="Install new content", type=str, nargs='+', metavar='ID')
-args = vars(parser.parse_args())
 
 
 def installARGS(url):

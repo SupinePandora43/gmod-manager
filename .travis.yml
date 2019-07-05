@@ -38,7 +38,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: ./dist/gmod-manager*
+  file: ./dist/gmod-manager(\.exe)*
   skip_cleanup: true
   name: $TRAVIS_TAG
   on:

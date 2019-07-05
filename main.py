@@ -18,13 +18,16 @@ if not os.path.exists("main.cfg"):
             gmad_path = "../bin/gmad.exe"
         else:
             try:
+                print("try")
                 if not "Garry's Mod Addon Creator" in str(subprocess.check_output("gmad.exe")):
+                    print("if not")
                     with open("./gmad.exe", "wb") as gmad_windows_file:
+                        print("write")
                         gmad_windows_file.write(requests.get(
                             "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe").content)
                         gmad_windows_file.close()
             except Exception as err:
-                pass
+                print("except")
     elif platform.system() == "Linux":
         passed = False
         for gmad_probably_path in ["./gmad_linux", "./gmad", "../bin/gmad", "../bin/gmad_linux"]:

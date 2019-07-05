@@ -35,6 +35,7 @@ if not os.path.exists("main.cfg"):
                     gmad_windows_file.write(requests.get(
                         "https://github.com/SupinePandora43/gmod-manager/releases/download/0.1.0/gmad.exe").content)
                     gmad_windows_file.close()
+                gmad_path = "./gmad.exe"
             elif platform.system() == "Linux":
                 gmad_linux = requests.get(
                     "https://github.com/AbigailBuccaneer/gmad-build/releases/download/v20180201/gmad_linux").content

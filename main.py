@@ -22,6 +22,7 @@ args = vars(parser.parse_args())
 config = ConfigParser()
 if not os.path.exists("main.cfg"):
     config.add_section("main")
+    gmad_path = None
     for gmad_probably_path in ["./gmad.exe", "../bin/gmad.exe", "./gmad_linux", "./gmad", "../bin/gmad", "../bin/gmad_linux"]:
         if os.path.exists(gmad_probably_path):
             gmad_path = gmad_probably_path

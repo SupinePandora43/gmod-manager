@@ -5,13 +5,13 @@
 			"name": "Python",
 			"type": "python",
 			"request": "launch",
-			"program": "${workspaceFolder}/main.py",
+			"program": "${workspaceFolder}/gmod_manager.py",
 			"args": [
 				"-install",
 				"https://steamcommunity.com/sharedfiles/filedetails/?id=1771627899",
 				"https://steamcommunity.com/sharedfiles/filedetails/?id=1771611119",
-				// "https://steamcommunity.com/sharedfiles/filedetails/?id=1782190410"
-				// "https://steamcommunity.com/sharedfiles/filedetails/?id=470366741"
+				// "https://steamcommunity.com/sharedfiles/filedetails/?id=1782190410",
+				// "https://steamcommunity.com/sharedfiles/filedetails/?id=470366741",
 
 
 				// "https://steamcommunity.com/sharedfiles/filedetails/?id=268191276",
@@ -107,8 +107,7 @@
 				// "https://steamcommunity.com/sharedfiles/filedetails/?id=586675254",
 				// "https://steamcommunity.com/sharedfiles/filedetails/?id=717620473",
 				// "https://steamcommunity.com/sharedfiles/filedetails/?id=1782190410"
-			],
-			"timeout": 30000
+			]
 		}
 	]
 }

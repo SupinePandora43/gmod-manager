@@ -3,7 +3,7 @@ name: Python
 on: [push]
 
 jobs:
-  build:
+  linux:
     name: Linux
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +19,7 @@ jobs:
         pip install -r requirements.txt
     - name: pyinstaller
       run: pyinstaller --onefile main.py -n gmod-manager
-  build:
+  windows:
     name: Windows
     runs-on: windows-latest
     steps:

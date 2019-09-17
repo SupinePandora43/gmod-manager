@@ -1,9 +1,6 @@
 name: Python
-
 on: [push]
-
 jobs:
-
   build:
     runs-on: ${{matrix.os}}
     strategy:
